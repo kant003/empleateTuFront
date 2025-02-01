@@ -3,3 +3,6 @@
 body{
     background-color: #121827;
 }
+textarea{
+    field-sizing: content;
+}

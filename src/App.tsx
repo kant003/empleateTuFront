@@ -6,24 +6,28 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import UserList from './pages/UserList'
 import Navbar from './components/Navbar'
+import Layout from './layout/Layout'
+import OfferList from './pages/OfferList'
+import NewOffer from './pages/NewOffer'
+import CategoriesList from './pages/CategoriesList'
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
-      <div className='flex flex-col h-screen'>
-        <Navbar />
-        <div className='container mx-auto flex grow justify-center items-center'>
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/register" element={<Register/>} />
-            <Route path="/profile" element={<Profile/>} />
-            <Route path="/userList" element={<UserList/>} />
-          </Routes>
-        </div>
-        </div>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path='home' element={<Home />}/>
+            <Route path="login" index element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="userList" element={<UserList />} />
+            <Route path="offerList" element={<OfferList />} />
+            <Route path="newOffer" element={<NewOffer />} />
+            <Route path="categoriesList" element={<CategoriesList />} />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </>
   )

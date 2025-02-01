@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react'
-import { getUsers } from '../services/userService'
 import ErrorAlert from '../components/ErrorAlert'
+import { getOffers } from '../services/offerService'
+import { Link } from 'react-router-dom'
 
-interface User {
-  id: number
-  name: string
-  surname: string
-  role: string
-  course: string
-  email: string
-  active: boolean
-  accepNotifications: boolean
+interface Offer{
+    id: number
+    title: string
+    description: string
+    active: boolean
+    contactEmail: string
+    location: string
+    published: Date
+    expired: Date
+    idCategory: number
 }
-function UserList() {
-  const [users, setUsers] = useState<User[]>([])
+
+function OfferList() {
+  const [offers, setOffers] = useState<Offer[]>([])
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function call() {
       try {
-        const userList : User[] = await getUsers()
-        userList.length>0 && setUsers(userList)
+        const offerList : Offer[] = await getOffers()
+        offerList.length>0 && setOffers(offerList)
       } catch (error) {
         const msg = error instanceof Error ? error.message : 'Error desconocido'
         setMessage(msg)
@@ -40,56 +43,52 @@ function UserList() {
   </div>
 
 
-  return (
-
-    <div className="relative overflow-x-auto">
+  return <>
+    <div className="">
       <ErrorAlert>{message}</ErrorAlert>
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Nombre
+              Titulo
             </th>
             <th scope="col" className="px-6 py-3">
-              Apellido
+              Inicio
             </th>
             <th scope="col" className="px-6 py-3">
-              Email
+              Fin
             </th>
             <th scope="col" className="px-6 py-3">
-              Rol
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Curso
+              Categoria
             </th>
           </tr>
         </thead>
         <tbody>
-          {users.map(user =>
-            <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+          {offers.map(offer =>
+            <tr key={offer.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
               <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {user.name}
+                {offer.title}
               </th>
               <td className="px-6 py-4">
-                {user.surname}
+                {new Date(offer.published).toLocaleDateString("es-ES", {dateStyle:'long'})}
               </td>
               <td className="px-6 py-4">
-                {user.email}
+                {new Date(offer.expired).toLocaleDateString("es-ES", {dateStyle:'long'})}
               </td>
               <td className="px-6 py-4">
-                {user.role}
-              </td>
-              <td className="px-6 py-4">
-                {user.course}
+                {offer.idCategory}
               </td>
             </tr>
           )}
-
         </tbody>
+        
       </table>
+      <div className='mt-20'>
+      <Link to={"/newOffer"} className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Añadir oferta</Link> 
+      </div>
     </div>
-
-  )
+    
+  </>
 }
 
-export default UserList
+export default OfferList
