@@ -7,6 +7,9 @@ import Profile from './pages/Profile'
 import UserList from './pages/UserList'
 import Navbar from './components/Navbar'
 import Layout from './layout/Layout'
+import OfferList from './pages/OfferList'
+import NewOffer from './pages/NewOffer'
+import CategoriesList from './pages/CategoriesList'
 
 function App() {
 
@@ -20,6 +23,9 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="profile" element={<Profile />} />
             <Route path="userList" element={<UserList />} />
+            <Route path="offerList" element={<OfferList />} />
+            <Route path="newOffer" element={<NewOffer />} />
+            <Route path="categoriesList" element={<CategoriesList />} />
           </Route>
         </Routes>
       </BrowserRouter>

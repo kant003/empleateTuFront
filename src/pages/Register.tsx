@@ -1,9 +1,12 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import ErrorAlert from '../components/ErrorAlert'
 import { registerUser } from '../services/authService'
+import { CursorProgressContext } from '../contexts/cursorProgressContext'
 
 function Register() {
   const courses = ["DAM1", "DAM2"]
+  const {setCursorProgress} = useContext(CursorProgressContext)
+
 
   const [form, setForm] = useState(
     {
@@ -17,6 +20,7 @@ function Register() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setCursorProgress(true)
     // mensaje por post al api del backend
     try {
       await registerUser(form.name, form.email, form.password, form.aceptNotifications)
@@ -27,6 +31,8 @@ function Register() {
       console.log(error);
       const msg = error instanceof Error ? error.message : 'Error desconocido'
       setMessage(msg)
+    }finally{
+      setCursorProgress(false)
     }
   }
 
@@ -47,7 +53,7 @@ function Register() {
       <div className="mb-5">
         <label htmlFor="course" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ciclo</label>
         <select id="course" name='course' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-          <option selected>Elige un Ciclo</option>
+          <option value="">Elige un Ciclo</option>
           {courses.map((course, i) => <option key={i} value={course.toLocaleLowerCase()}>{course}</option>)}
         </select></div>
       <div className="mb-5 col-span-2">

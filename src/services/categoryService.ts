@@ -1,7 +1,7 @@
 const URL_BASE = 'http://localhost:3000/api/'
-export const getUsers = async () => {
+export const getCategories = async () => {
     try{
-        const response = await fetch(URL_BASE + 'users/',{
+        const response = await fetch(URL_BASE + 'categories/',{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -9,7 +9,7 @@ export const getUsers = async () => {
             credentials: 'include'
         })
         if(!response.ok){
-            throw new Error('fallo al obtener los usuario')
+            throw new Error('fallo al obtener las categorias')
         }
         return await response.json()
     }catch(error){
@@ -20,22 +20,25 @@ export const getUsers = async () => {
 }
 
 
-export const getUserProfile = async () => {
+export const registerCategory = async (name:string) => {
     try{
-        const response = await fetch(URL_BASE + 'users/profile',{
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        })
+        const response = await fetch(URL_BASE + 'categories/',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( {category:{name}} ),
+                credentials: 'include'
+            }
+        )
         if(!response.ok){
-            throw new Error('fallo al obtener los usuario')
+            throw new Error('Error al crear categoria')
         }
         return await response.json()
+
     }catch(error){
         const msg = error instanceof Error ? error.message : 'Error desconocido'
         throw new Error(msg)
     }
-
 }
