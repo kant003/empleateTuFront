@@ -12,11 +12,15 @@ import OfferDetail from "./pages/OfferDetail";
 import { Toaster } from "react-hot-toast";
 import Footer from "./components/Footer";
 import CategoryManager from "./pages/CategoryManager";
+import { AuthProviderWrapper } from "./contexts/AuthContext";
 
 function App() {
+
   return (
     <>
       <BrowserRouter>
+      <AuthProviderWrapper>
+
         <div className="flex flex-col">
           <Navbar />
           <Toaster position="top-center" reverseOrder={false} />
@@ -36,6 +40,7 @@ function App() {
           </div>
           <Footer />
         </div>
+        </AuthProviderWrapper>
       </BrowserRouter>
     </>
   );

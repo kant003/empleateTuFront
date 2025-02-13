@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { AuthService } from '../services/authService'
+import { useAuth } from '../contexts/AuthContext';
 
 function Login() {
+  const { login} = useAuth();
+
 
   const [form, setForm] = useState(
     {
@@ -15,9 +18,10 @@ function Login() {
     e.preventDefault()
     // mensaje por post al api del backend
     try{
-      await AuthService.loginUser(form.email, form.password)
+       await AuthService.loginUser(form.email, form.password)
       console.log('login successfull')
       setMessage('login successfull')
+      login({email:form.email})
       // Redirigir a otra pagina (ofertas)
     }catch(error){
       const msg = error instanceof Error ? error.message : 'Error desconocido'
