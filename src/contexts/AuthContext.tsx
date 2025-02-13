@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import User from "../models/User";
 interface AuthContextType{
     user: User | null
-    login: (user: User) =>void
+    login: (user: Partial<User>) =>void
     logout: () => void
 }
 const AuthContext = createContext<AuthContextType | undefined>(
