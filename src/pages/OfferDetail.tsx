@@ -2,12 +2,15 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { OfferService } from "../services/offer.services"
 import Offer from "../models/Offer"
+import { StarRating } from "../components/StarRating"
 
 function OfferDetail() {
   const {id} = useParams()
   const [offer, setOffer] = useState<Offer>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+
 
   useEffect(()=>{
     setLoading(true)
@@ -19,6 +22,9 @@ function OfferDetail() {
       .finally(()=>setLoading(false))
   },[id])
 
+
+
+
   if(loading) return <div>Loading...</div>
   if(error) return <div>Error: {error}</div>
   if(!offer) return <div>Ofertas no encontradas</div>
@@ -26,6 +32,7 @@ function OfferDetail() {
   return (
     <div className="text-white">
       <div>Titulo: {offer.title}</div>
+      <StarRating idOffer={Number(id)} />
       <div>Descripcion: {offer.description}</div>
       <div>Activo: {offer.active?'SI':'NO'}</div>
       <div>Email de contacto: {offer.contactEmail}</div>
