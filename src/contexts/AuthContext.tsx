@@ -36,7 +36,6 @@ export function AuthProvider({children}:{children: React.ReactNode}){
                 const response = await fetch(API_URL_BASE+'/auth/user', {credentials: 'include'})
                 if (!response.ok) throw new Error("No autenticado");
                 const data = await response.json()
-                console.log('Usuario cargado:', data)
                 setUser(data)
             }catch(error){
                 console.error('Error al cargar el usuario', error)

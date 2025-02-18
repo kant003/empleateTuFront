@@ -8,6 +8,7 @@ import { CategoryService } from '../services/categoryService'
 import Category from '../models/Category'
 import InputForm from '../components/InputForm'
 import ErrorMsgData from '../utils/ErrorMsgData'
+import TextAreaInputForm from '../components/TextAreaInputForm'
 
 // - formulario de creación de 1 oferta
 // -- Actualizar una oferta
@@ -95,7 +96,7 @@ function OfferForm() {
     }
   }
 
-  const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>{
+  const handleChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>{
     const {value, name} = e.target
     //if(name==='idCategory') valueNew = Number(value) 
     setForm({ ...form, [name]:value,  }) 
@@ -115,7 +116,8 @@ function OfferForm() {
       <form className="max-w-sm mx-auto min-w-sm" onSubmit={handleSubmit}>
       
       <InputForm text="Título" name="title" value={form.title || ''} handleChange={handleChange} error={errors.title} /> 
-      <InputForm text="Descripción" name="description" value={form.description || ''} handleChange={handleChange} error={errors.description} /> 
+      <TextAreaInputForm type="textarea" rows={6} text="Descripción" name="description" value={form.description || ''} handleChange={handleChange} error={errors.description} /> 
+      
       <InputForm text="Email de contacto" name="contactEmail" value={form.contactEmail || ''} handleChange={handleChange} error={errors.contactEmail} /> 
       <InputForm text="Localización" name="location" value={form.location || ''} handleChange={handleChange} error={errors.location} /> 
       

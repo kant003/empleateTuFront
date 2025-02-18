@@ -17,14 +17,14 @@ export function StarRating({ idOffer }: StarRatingProps) {
 
   useEffect(() => {
     //if(!id) return
-    RateService.getGlobalRate(idOffer).then((data) => {
+     RateService.getGlobalRate(idOffer).then((data) => {
       console.log("rate", data);
       setAverageRating(data.averageRating);
       setTotalRatings(data.totalRatings);
-    });
+    }); 
 
-    RateService.getMyRate(idOffer).then(setMyRate);
-  }, [idOffer]);
+    RateService.getMyRate(idOffer).then((rate) => setMyRate(rate.value));
+  }, [idOffer, myRate]);
 
   const handleRate =async(rating: number) => {
     await RateService.rate(idOffer, rating);
@@ -32,16 +32,7 @@ export function StarRating({ idOffer }: StarRatingProps) {
   }
 
   return (
-    <div className="p-4 border rounded-md shadow-md">
-    <div className="text-lg font-semibold">Calificación</div>
-    <p className="text-sm text-gray-600">
-      <strong>Promedio:</strong> {averageRating ?? "N/A"} ⭐ ({totalRatings} votos)
-    </p>
-    <p className="text-sm text-gray-600">
-      <strong>Tu calificación:</strong> {myRate > 0 ? `${myRate} ⭐` : "No calificado"}
-    </p>
-{myRate}
-    <div className="flex space-x-1 mt-2">
+    <div className="flex space-x-1 my-5">
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
@@ -51,7 +42,7 @@ export function StarRating({ idOffer }: StarRatingProps) {
           {star <= myRate ? <IconStarFilled size={20} className="text-yellow-500" /> : <IconStar size={20} className="text-gray-400" />}
         </span>
       ))}
+      <strong>Promedio:</strong> {averageRating ?? "N/A"} ⭐ ({totalRatings} votos)
     </div>
-  </div>
   );
 }
